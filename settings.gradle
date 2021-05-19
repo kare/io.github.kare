@@ -1,0 +1,9 @@
+rootProject.name = 'io.github.kare'
+
+include('common')
+
+dependencyResolutionManagement {
+	repositories {
+		mavenCentral()
+	}
+}
