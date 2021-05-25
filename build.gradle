@@ -1,118 +1,68 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-
-buildscript {
-	repositories {
-		mavenCentral()
-	}
-}
+import java.time.Duration
 
 plugins {
-	id 'com.diffplug.spotless' version '5.12.5'
+	id "idea"
+	id "eclipse"
+	id "com.diffplug.spotless" version "5.12.5"
+	id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
 }
 
-allprojects {
-	apply plugin: 'jacoco'
+group = "io.github.kare"
+version = "0.0.1-alpha.0"
 
-	group = 'io.github.kare'
-	version = '0.0.1-alpha.0'
+nexusPublishing {
+	repositories {
+		sonatype {
+			// TODO: find out Nexus stagingProfileId
+			//stagingProfileId.set("yourStagingProfileId")
+			nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+			snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+			username = project.findProperty("sonatypeUsername")
+			password = project.findProperty("sonatypePassword")
+		}
+	}
+
+	// 5 min is default
+	connectTimeout.set(Duration.ofMinutes(5))
+	clientTimeout.set(Duration.ofMinutes(5))
+}
+allprojects {
+	apply plugin: "jacoco"
+
+	group = rootProject.group
+	version = rootProject.version
 
 	// https://docs.gradle.org/current/userguide/jacoco_plugin.html
 	jacoco {
-		toolVersion = '0.8.6'
+		toolVersion = "0.8.7"
 	}
 }
 
 subprojects {
-	apply plugin: 'java-library'
-	apply plugin: 'idea'
-	apply plugin: 'eclipse'
-	apply plugin: 'maven-publish'
-	apply plugin: 'signing'
+	apply plugin: "java-library"
 
 	classes.dependsOn spotlessApply
-
-	tasks.withType(Test) {
-		useJUnitPlatform {
-			systemProperties = [
-					'junit.jupiter.extensions.autodetection.enabled': 'true',
-					'junit.jupiter.execution.timeout.default': '1 m',
-			]
-		}
-		testLogging {
-			events = [
-					TestLogEvent.SKIPPED,
-					TestLogEvent.FAILED,
-			]
-			exceptionFormat TestExceptionFormat.SHORT
-			info {
-				events = [
-						TestLogEvent.PASSED,
-						TestLogEvent.SKIPPED,
-						TestLogEvent.FAILED,
-				]
-				exceptionFormat TestExceptionFormat.FULL
-			}
-		}
-	}
-	java {
-		sourceCompatibility(JavaVersion.VERSION_1_8)
-		targetCompatibility(JavaVersion.VERSION_1_8)
-		withJavadocJar()
-		withSourcesJar()
-	}
-	tasks.withType(JavaCompile) {
-		options.encoding = 'UTF-8'
-		options.compilerArgs += [
-				'-Werror',
-				'-Xlint:auxiliaryclass',
-				'-Xlint:cast',
-				'-Xlint:classfile',
-				'-Xlint:deprecation',
-				'-Xlint:dep-ann',
-				'-Xlint:divzero',
-				'-Xlint:empty',
-				'-Xlint:fallthrough',
-				'-Xlint:finally',
-				'-Xlint:options',
-				'-Xlint:overloads',
-				'-Xlint:overrides',
-				'-Xlint:path',
-				'-Xlint:processing',
-				'-Xlint:rawtypes',
-				'-Xlint:-serial',
-				'-Xlint:static',
-				'-Xlint:try',
-				'-Xlint:unchecked',
-				'-Xlint:varargs',
-		]
-	}
-	tasks.withType(Javadoc){
-		options.encoding = 'UTF-8'
-		if (JavaVersion.current().isJava9Compatible()) {
-			options.addBooleanOption('html5', true)
-		}
-	}
 }
 
 spotless {
-	format 'misc', {
-		target '**/*.gradle', '.gitignore'
+	format "misc", {
+		target "**/*.gradle", ".gitignore"
 		indentWithTabs()
 		trimTrailingWhitespace()
 		endWithNewline()
 	}
 	java {
-		target rootProject.fileTree('.') {
-			include '*/src/*/java/**/*.java'
+		target rootProject.fileTree(".") {
+			include "*/src/*/java/**/*.java"
 		}
 		removeUnusedImports()
-		licenseHeaderFile 'LICENSE-HEADER.txt'
-		googleJavaFormat('1.7')
+		licenseHeaderFile "LICENSE-HEADER.txt"
+		googleJavaFormat("1.7")
 	}
 }
 
-tasks.register('codeCoverageReport', JacocoReport) {
+tasks.register("codeCoverageReport", JacocoReport) {
+	group = "verification"
 	dependsOn = subprojects.test
 	getAdditionalSourceDirs().setFrom(files(subprojects.sourceSets.main.allSource.srcDirs))
 	getSourceDirectories().setFrom(files(subprojects.sourceSets.main.allSource.srcDirs))

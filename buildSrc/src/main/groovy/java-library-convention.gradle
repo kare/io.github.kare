@@ -1,0 +1,75 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
+plugins {
+	id "java-library"
+}
+
+dependencies {
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+tasks.withType(Test) {
+	useJUnitPlatform {
+		systemProperties = [
+				"junit.jupiter.extensions.autodetection.enabled": "true",
+				"junit.jupiter.execution.timeout.default"       : "1 m",
+		]
+	}
+	testLogging {
+		events = [
+				TestLogEvent.SKIPPED,
+				TestLogEvent.FAILED,
+		]
+		exceptionFormat TestExceptionFormat.SHORT
+		info {
+			events = [
+					TestLogEvent.PASSED,
+					TestLogEvent.SKIPPED,
+					TestLogEvent.FAILED,
+			]
+			exceptionFormat TestExceptionFormat.FULL
+		}
+	}
+}
+java {
+	sourceCompatibility(JavaVersion.VERSION_1_8)
+	targetCompatibility(JavaVersion.VERSION_1_8)
+	// Publishing to OSSRH requires javadoc and sources
+	// https://central.sonatype.org/pages/requirements.html
+	withJavadocJar()
+	withSourcesJar()
+}
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+	options.compilerArgs += [
+			'-Werror',
+			'-Xlint:auxiliaryclass',
+			'-Xlint:cast',
+			'-Xlint:classfile',
+			'-Xlint:deprecation',
+			'-Xlint:dep-ann',
+			'-Xlint:divzero',
+			'-Xlint:empty',
+			'-Xlint:fallthrough',
+			'-Xlint:finally',
+			'-Xlint:options',
+			'-Xlint:overloads',
+			'-Xlint:overrides',
+			'-Xlint:path',
+			'-Xlint:processing',
+			'-Xlint:rawtypes',
+			'-Xlint:serial',
+			'-Xlint:static',
+			'-Xlint:try',
+			'-Xlint:unchecked',
+			'-Xlint:varargs',
+	]
+}
+tasks.withType(Javadoc) {
+	options.encoding = 'UTF-8'
+	if (JavaVersion.current().isJava9Compatible()) {
+		options.addBooleanOption('html5', true)
+	}
+}

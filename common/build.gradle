@@ -1,4 +1,4 @@
-dependencies {
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+plugins {
+	id "java-library-convention"
+	id "publish-java-library-to-maven-central"
 }
