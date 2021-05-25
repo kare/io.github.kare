@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.github.kare"
-version = "0.0.1-alpha.0"
+version = "0.0.1-beta.1"
 
 nexusPublishing {
 	repositories {
