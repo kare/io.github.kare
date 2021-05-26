@@ -13,8 +13,6 @@ version = "0.0.1"
 nexusPublishing {
 	repositories {
 		sonatype {
-			// TODO: find out Nexus stagingProfileId
-			//stagingProfileId.set("yourStagingProfileId")
 			nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
 			snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
 			username = project.findProperty("sonatypeUsername")

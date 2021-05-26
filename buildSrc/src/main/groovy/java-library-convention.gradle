@@ -6,8 +6,9 @@ plugins {
 }
 
 dependencies {
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+	//testImplementation("nl.jqno.equalsverifier:equalsverifier:3.6.1")
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
 tasks.withType(Test) {
@@ -42,34 +43,34 @@ java {
 	withSourcesJar()
 }
 tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
+	options.encoding = "UTF-8"
 	options.compilerArgs += [
-			'-Werror',
-			'-Xlint:auxiliaryclass',
-			'-Xlint:cast',
-			'-Xlint:classfile',
-			'-Xlint:deprecation',
-			'-Xlint:dep-ann',
-			'-Xlint:divzero',
-			'-Xlint:empty',
-			'-Xlint:fallthrough',
-			'-Xlint:finally',
-			'-Xlint:options',
-			'-Xlint:overloads',
-			'-Xlint:overrides',
-			'-Xlint:path',
-			'-Xlint:processing',
-			'-Xlint:rawtypes',
-			'-Xlint:serial',
-			'-Xlint:static',
-			'-Xlint:try',
-			'-Xlint:unchecked',
-			'-Xlint:varargs',
+			"-Werror",
+			"-Xlint:auxiliaryclass",
+			"-Xlint:cast",
+			"-Xlint:classfile",
+			"-Xlint:deprecation",
+			"-Xlint:dep-ann",
+			"-Xlint:divzero",
+			"-Xlint:empty",
+			"-Xlint:fallthrough",
+			"-Xlint:finally",
+			"-Xlint:options",
+			"-Xlint:overloads",
+			"-Xlint:overrides",
+			"-Xlint:path",
+			"-Xlint:processing",
+			"-Xlint:rawtypes",
+			"-Xlint:serial",
+			"-Xlint:static",
+			"-Xlint:try",
+			"-Xlint:unchecked",
+			"-Xlint:varargs",
 	]
 }
 tasks.withType(Javadoc) {
-	options.encoding = 'UTF-8'
+	options.encoding = "UTF-8"
 	if (JavaVersion.current().isJava9Compatible()) {
-		options.addBooleanOption('html5', true)
+		options.addBooleanOption("html5", true)
 	}
 }

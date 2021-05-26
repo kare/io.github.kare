@@ -1,6 +1,6 @@
-rootProject.name = 'io.github.kare'
+rootProject.name = "io.github.kare"
 
-include('common')
+include("common")
 
 dependencyResolutionManagement {
 	repositories {
