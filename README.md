@@ -5,8 +5,8 @@
 
 Run all tests:
 
-`gradlew test`
+`make test`
 
 Generate code coverage report of all sources:
 
-`gradlew codeCoverageReport`
+`make coverage`
