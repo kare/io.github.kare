@@ -43,4 +43,19 @@ public final class ByteArrays {
         + ((bytes[6] & 0xFF) << 8)
         + (bytes[7] & 0xFF);
   }
+
+  /**
+   * Reverses given byte array.
+   *
+   * @param bytes Array of bytes
+   * @throws NullPointerException Thrown if given array is null
+   */
+  public static void reverse(byte[] bytes) {
+    for (int i = 0; i < bytes.length / 2; i++) {
+      final int n = bytes.length - 1 - i;
+      bytes[i] = (byte) ((int) bytes[i] ^ (int) bytes[n]);
+      bytes[n] = (byte) ((int) bytes[i] ^ (int) bytes[n]);
+      bytes[i] = (byte) ((int) bytes[i] ^ (int) bytes[n]);
+    }
+  }
 }
