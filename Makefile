@@ -3,7 +3,7 @@ SHELL = /bin/bash
 .SHELLFLAGS = -eu -o pipefail -c # run '/bin/bash ... -c /bin/cmd'
 .DEFAULT_GOAL = coverage
 
-gradlew = ./gradlew
+gradlew = ./gradlew --console verbose
 
 .PHONY: publish-local
 publish-local: ## Publish to local Maven repository
