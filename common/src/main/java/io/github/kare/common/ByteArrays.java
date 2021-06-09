@@ -58,4 +58,21 @@ public final class ByteArrays {
       bytes[i] = (byte) ((int) bytes[i] ^ (int) bytes[n]);
     }
   }
+
+  /**
+   * Checks whether given {@code bytes} array contains value {@code b}.
+   *
+   * @param bytes Byte array to search
+   * @param b byte to search in array bytes
+   * @return true if given bytes contains b, false otherwise
+   * @throws NullPointerException Thrown if given array is null
+   */
+  public static boolean contains(final byte[] bytes, final byte b) {
+    for (final byte a : bytes) {
+      if (a == b) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

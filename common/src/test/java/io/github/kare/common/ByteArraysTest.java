@@ -20,6 +20,7 @@ package io.github.kare.common;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -100,5 +101,25 @@ class ByteArraysTest {
     } catch (NullPointerException e) {
       assertTrue(true);
     }
+  }
+
+  @Test
+  void containsByteArrayMustNotBeNull() {
+    try {
+      ByteArrays.contains(null, (byte) 1);
+      fail("expecting NullPointerException");
+    } catch (NullPointerException e) {
+      assertTrue(true);
+    }
+  }
+
+  @Test
+  void containsByteArray() {
+    byte[] given = new byte[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    assertTrue(ByteArrays.contains(given, (byte) 0));
+    assertTrue(ByteArrays.contains(given, (byte) 5));
+    assertTrue(ByteArrays.contains(given, (byte) 10));
+    assertFalse(ByteArrays.contains(given, (byte) 11));
+    assertFalse(ByteArrays.contains(new byte[] {}, (byte) 11));
   }
 }
