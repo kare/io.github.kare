@@ -16,7 +16,9 @@ signing {
 void sign(Project project) {
 	project.signing {
 		required {
-			project.gradle.taskGraph.hasTask("publish")
+			project.gradle.taskGraph.hasTask("publish") &&
+					!project.version.toString().endsWith("-SNAPSHOT") &&
+					!project.hasProperty("skipSigning")
 		}
 		def signingKeyId = project.findProperty("signingKeyId")
 		def signingKey = project.findProperty("signingKey")
