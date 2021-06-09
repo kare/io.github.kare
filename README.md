@@ -5,8 +5,12 @@
 
 Run all tests:
 
-`make test`
+```bash
+make test
+```
 
 Generate code coverage report of all sources:
 
-`make coverage`
+```bash
+make coverage
+```
