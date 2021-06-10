@@ -55,6 +55,26 @@ publishing {
 					developerConnection = "scm:git:ssh://github.com/kare/io.github.kare.git"
 					url = "https://github.com/kare/io.github.kare"
 				}
+				issueManagement {
+					system = "GitHub"
+					url = "https://github.com/kare/io.github.kare/issues"
+				}
+
+				ciManagement {
+					system = "GitHub"
+					url = "https://github.com/kare/io.github.kare/actions"
+				}
+				licenses {
+					license {
+						name = "Apache-2.0"
+						url = "https://opensource.org/licenses/Apache-2.0"
+						distribution = "repo"
+					}
+				}
+				organization {
+					name = "Kare Nuorteva"
+					url = "https://karenuorteva.fi/"
+				}
 			}
 		}
 	}
