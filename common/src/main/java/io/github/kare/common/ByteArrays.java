@@ -25,7 +25,7 @@ public final class ByteArrays {
   }
 
   /**
-   * Convert an array of eight bytes to long.
+   * Convert an array of bytes to long. Only first eight bytes are considered.
    *
    * @param bytes Array of eight bytes
    * @return Returns given byte array as long
