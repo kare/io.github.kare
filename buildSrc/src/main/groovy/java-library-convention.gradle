@@ -22,6 +22,7 @@ tasks.withType(Test) {
 		systemProperties = [
 				"junit.jupiter.extensions.autodetection.enabled": "true",
 				"junit.jupiter.execution.timeout.default"       : "1 m",
+				"junit.jupiter.execution.parallel.enabled"      : true,
 		]
 	}
 	testLogging {
@@ -52,8 +53,6 @@ tasks.withType(Test) {
 java {
 	sourceCompatibility(JavaVersion.VERSION_1_8)
 	targetCompatibility(JavaVersion.VERSION_1_8)
-	// Publishing to OSSRH requires javadoc and sources
-	// https://central.sonatype.org/pages/requirements.html
 	withJavadocJar()
 	withSourcesJar()
 }
