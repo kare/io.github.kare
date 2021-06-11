@@ -138,4 +138,41 @@ class ByteArraysTest {
     assertFalse(ByteArrays.contains(given, (byte) 11));
     assertFalse(ByteArrays.contains(new byte[] {}, (byte) 11));
   }
+
+  @Test
+  void catNullArguments() {
+    try {
+      ByteArrays.cat(null, null);
+      fail("expecting NullPointerException");
+    } catch (NullPointerException e) {
+      assertTrue(true);
+    }
+
+    try {
+      ByteArrays.cat(null, new byte[] {});
+      fail("expecting NullPointerException");
+    } catch (NullPointerException e) {
+      assertTrue(true);
+    }
+
+    try {
+      ByteArrays.cat(new byte[] {}, null);
+      fail("expecting NullPointerException");
+    } catch (NullPointerException e) {
+      assertTrue(true);
+    }
+  }
+
+  @Test
+  void catConcatenatesTwoArrays() {
+    byte[] a = new byte[] {1};
+    byte[] b = new byte[] {2};
+    byte[] result = ByteArrays.cat(a, b);
+    assertArrayEquals(new byte[] {1, 2}, result);
+
+    a = new byte[] {1, 2, 3, 4, 5, 6, 7};
+    b = new byte[] {-2, -1, 0, 1};
+    result = ByteArrays.cat(a, b);
+    assertArrayEquals(new byte[] {1, 2, 3, 4, 5, 6, 7, -2, -1, 0, 1}, result);
+  }
 }

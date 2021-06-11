@@ -75,4 +75,20 @@ public final class ByteArrays {
     }
     return false;
   }
+
+  /**
+   * Concatenates two byte arrays to a single array. Reserves memory for a new array.
+   *
+   * @param a Start of the new array
+   * @param b Bytes after array a
+   * @return Array a + b concatenated
+   * @throws NullPointerException Thrown if any given array is null
+   */
+  public static byte[] cat(final byte[] a, final byte[] b) {
+    final int aLen = a.length;
+    final byte[] result = new byte[aLen + b.length];
+    System.arraycopy(a, 0, result, 0, aLen);
+    System.arraycopy(b, 0, result, aLen, b.length);
+    return result;
+  }
 }
