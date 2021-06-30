@@ -18,14 +18,28 @@
  */
 package io.github.kare.common;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.OutputStream;
 import org.junit.jupiter.api.Test;
 
 class IOTest {
+  @Test
+  void copyCopiesBytes() throws IOException {
+    final byte[] expected = "Hello, World!".getBytes();
+    OutputStream out = new ByteArrayOutputStream();
+    long count = IO.copy(new ByteArrayInputStream(expected), out);
+    assertArrayEquals(expected, out.toString().getBytes());
+    assertEquals(expected.length, count);
+  }
+
   @Test
   void closeClosesCloseables() {
     class BasicCloseable implements Closeable {

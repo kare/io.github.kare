@@ -20,13 +20,38 @@ package io.github.kare.common;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /** Common IO utilities. */
 public final class IO {
+  /** Copy buffer size in bytes. */
+  private static final int COPY_BUFFER_SIZE = 1024 * 4;
+
   private IO() {
     throw new AssertionError("No IO instances for you!");
+  }
+
+  /**
+   * Copy bytes from input stream {@code in} to output stream {@code out}.
+   *
+   * @param in Input stream to read bytes from
+   * @param out Output stream to write bytes to
+   * @return Number of bytes copies
+   * @throws IOException Thrown in case of I/O error
+   * @throws NullPointerException If either given in or out is null
+   */
+  public static long copy(final InputStream in, final OutputStream out) throws IOException {
+    final byte[] buf = new byte[COPY_BUFFER_SIZE];
+    int n;
+    long byteCount = 0;
+    while ((n = in.read(buf, 0, buf.length)) != -1) {
+      out.write(buf, 0, n);
+      byteCount += n;
+    }
+    return byteCount;
   }
 
   /**
