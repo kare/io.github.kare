@@ -97,7 +97,5 @@ tasks.withType(Javadoc) {
 	options.encoding = "UTF-8"
 	options.docEncoding = "UTF-8"
 	options.windowTitle = "${project.name} ${project.version} API"
-	if (JavaVersion.current().isJava9Compatible()) {
-		options.addBooleanOption("html5", true)
-	}
+	options.source = "8"
 }
