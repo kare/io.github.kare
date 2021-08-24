@@ -55,7 +55,7 @@ spotless {
 		}
 		removeUnusedImports()
 		licenseHeaderFile "LICENSE-HEADER.txt"
-		googleJavaFormat("1.7")
+		googleJavaFormat("1.11.0")
 	}
 }
 
