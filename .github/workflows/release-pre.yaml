@@ -1,0 +1,44 @@
+name: Pre Release
+
+defaults:
+  run:
+    shell: bash
+
+on:
+  push:
+    branches:
+      - main
+    tags: # https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+      - '^v(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set environment
+        id: env
+        run: |
+          go install github.com/bvieira/sv4git/v2/cmd/git-sv@v2.4.0
+          go install github.com/git-chglog/git-chglog/cmd/git-chglog@v0.15.0
+          echo "::set-output name=version::${GITHUB_REF#refs/*/}"
+
+          echo "::set-output name=release_notes_file_sv::$(mktemp)"
+          echo "::set-output name=release_notes_file_chglog::$(mktemp)"
+          echo "::set-output name=release_notes_file::$(mktemp)"
+      - name: Generate Release Notes files
+        run: |
+          git sv release-notes >> ${{ steps.env.outputs.release_notes_file_sv}}
+          git chglog ${{ steps.env.outputs.version }} >> ${{ steps.env.outputs.release_notes_file_chglog}}
+
+          cat ${{ steps.env.outputs.release_notes_file_sv}} >> ${{ steps.env.outputs.release_notes_file}}
+          echo "\n\n\n\n# git-sv above and git-chglog below\n\n\n\n" >> ${{ steps.env.outputs.release_notes_file}}
+          cat ${{ steps.env.outputs.release_notes_file_chglog}} >> ${{ steps.env.outputs.release_notes_file}}
+      - run: |
+          #./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
+      - uses: ncipollo/release-action@v1.8.8
+        id: create_release
+        with:
+          tag: ${{ github.ref }}
+          bodyFile: ${{ steps.env.outputs.release_notes_file}}
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
