@@ -37,7 +37,7 @@ jobs:
       - name: Generate Release Notes files
         run: |
           git sv release-notes >> ${{ steps.sv4git.outputs.release_notes_file}}
-          cat ${{ steps.sv4git.outputs.release_notes_file}} >> ${{ steps.env.outputs.release_notes_file}}
+          cat ${{ steps.sv4git.outputs.release_notes_file}} | tee ${{ steps.env.outputs.release_notes_file}}
           #echo "\n\n\n\n# git-sv above and git-chglog below\n\n\n\n" >> ${{ steps.env.outputs.release_notes_file}}
           #git chglog ${{ steps.env.outputs.version }} >> ${{ steps.gitchglog.outputs.release_notes_file}}
           #cat ${{ steps.gitchglog.outputs.release_notes_file}} >> ${{ steps.env.outputs.release_notes_file}}
