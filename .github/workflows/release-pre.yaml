@@ -22,21 +22,26 @@ jobs:
       - name: Set environment
         id: env
         run: |
-          go install github.com/bvieira/sv4git/v2/cmd/git-sv@v2.4.0
-          go install github.com/git-chglog/git-chglog/cmd/git-chglog@v0.15.0
           echo "::set-output name=version::${GITHUB_REF#refs/*/}"
-
-          echo "::set-output name=release_notes_file_sv::$(mktemp)"
-          echo "::set-output name=release_notes_file_chglog::$(mktemp)"
+          echo "::set-output name=release_notes_file::$(mktemp)"
+      - name: Install github.com/bvieira/sv4git/v2/cmd/git-sv
+        id: sv4git
+        run: |
+          go install github.com/bvieira/sv4git/v2/cmd/git-sv@v2.4.0
+          echo "::set-output name=release_notes_file::$(mktemp)"
+      - name: Install github.com/git-chglog/git-chglog/cmd/git-chglog
+        id: gitchglog
+        run: |
+          go install github.com/git-chglog/git-chglog/cmd/git-chglog@v0.15.0
           echo "::set-output name=release_notes_file::$(mktemp)"
       - name: Generate Release Notes files
         run: |
-          git sv release-notes >> ${{ steps.env.outputs.release_notes_file_sv}}
-          git chglog ${{ steps.env.outputs.version }} >> ${{ steps.env.outputs.release_notes_file_chglog}}
+          git sv release-notes >> ${{ steps.sv4git.outputs.release_notes_file}}
+          git chglog ${{ steps.env.outputs.version }} >> ${{ steps.gitchglog.outputs.release_notes_file}}
 
-          cat ${{ steps.env.outputs.release_notes_file_sv}} >> ${{ steps.env.outputs.release_notes_file}}
+          cat ${{ steps.sv4git.outputs.release_notes_file}} >> ${{ steps.env.outputs.release_notes_file}}
           echo "\n\n\n\n# git-sv above and git-chglog below\n\n\n\n" >> ${{ steps.env.outputs.release_notes_file}}
-          cat ${{ steps.env.outputs.release_notes_file_chglog}} >> ${{ steps.env.outputs.release_notes_file}}
+          cat ${{ steps.gitchglog.outputs.release_notes_file}} >> ${{ steps.env.outputs.release_notes_file}}
       - run: |
           #./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
       - uses: ncipollo/release-action@v1.8.8
