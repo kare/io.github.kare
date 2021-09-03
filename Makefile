@@ -1,6 +1,6 @@
 LANG = en_US.UTF-8
 SHELL = /bin/bash
-.SHELLFLAGS = -eu -o pipefail -c # run '/bin/bash ... -c /bin/cmd'
+.SHELLFLAGS = --noprofile --norc -eu -o pipefail -c # run '/bin/bash ... -c /bin/cmd'
 .DEFAULT_GOAL = coverage
 
 gradlew = ./gradlew --console verbose
