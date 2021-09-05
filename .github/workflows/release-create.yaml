@@ -29,19 +29,23 @@ jobs:
         run: |
           go install github.com/bvieira/sv4git/v2/cmd/git-sv@v2.4.0
           echo "::set-output name=version::${GITHUB_REF#refs/*/}"
-          echo "::set-output name=release_notes_file::$(mktemp)"
-      - name: Generate Release Notes
-        run: |
-          git sv release-notes | tee ${{ steps.env.outputs.release_notes_file }}
-          echo "::set-output name=release_notes_body::$(cat ${{ steps.env.outputs.release_notes_file }})"
       - name: Publish to Maven Central
         run: |
-          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
-      - uses: ncipollo/release-action@v1.8.8
-        id: create_release
-        with:
-          tag: ${{ github.ref }}
-          prerelease: true
-          body: ${{ env.release_notes_body }}
-          draft: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # Update CHANGELOG
+          git sv changelog > CHANGELOG.md
+          git add CHANGELOG.md
+          git commit --message="docs: Update CHANGELOG.md for release ${version}"
+
+          # Update version in gradle.properties
+          grtmp=$(mktemp)
+          sed -E 's/^version = ".*"$/version = "'"$version"'"/g' gradle.properties > "$grtmp"
+          mv "$grtmp" gradle.properties
+          git add gradle.properties
+
+          # Create release commit
+          git commit --message="Release ${version}"
+          git tag --message="Release ${version}" --annotate "v${version}"
+
+          # Push tags
+          git push
+          git push --tags
