@@ -30,6 +30,12 @@ jobs:
           git sv release-notes | tee ${{ steps.env.outputs.release_notes_file }}
           echo "::set-output name=release_notes_body::$(cat ${{ steps.env.outputs.release_notes_file }})"
       - name: Publish to Maven Central
+        env:
+          ORG_GRADLE_PROJECT_SIGNINGKEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
+          ORG_GRADLE_PROJECT_SIGNINGKEYID: ${ secrets.ORG_GRADLE_PROJECT_SIGNINGKEYID }
+          ORG_GRADLE_PROJECT_SIGNINPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINPASSWORD }}
+          ORG_GRADLE_PROJECT_SONATYPEUSERNAME: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME  }}
+          ORG_GRADLE_PROJECT_SONATYPEPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORAD }}
         run: |
           ./gradlew --stacktrace publishToSonatype closeAndReleaseSonatypeStagingRepository
       - uses: ncipollo/release-action@v1.8.8
