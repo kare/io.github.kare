@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.0.3-beta.10 (2021-09-05)
+
+### Continuous Integration
+
+- Validate release (c2af72e)
+- Validate given version (7046503)
+- Mark pre (alpha/beta) releases as such on GitHub Releases (ec1347c)
+- Add Create Release workflow (eb0f9ea)
+- Include release notes to GitHub Release body text (46c4237)
+
+### Documentation
+
+- Update CHANGELOG.md for release 0.0.3-beta.10 (70a96d2)
+
+---
+
 ## v0.0.3-beta.9 (2021-09-05)
 
 ### Continuous Integration
@@ -131,19 +147,6 @@
 
 - Update ByteArrays.toLong() Javadoc (e5a6a4d)
 - Format README code examples (7109b7c)
-
----
-
-## v0.0.2 (2021-06-02)
-
-### Features
-
-- ByteArrays.reverse(byte[]) (3f2f244)
-- **build:** add more recipes (f519cb9)
-
-### Build
-
-- **java-lib:** fail on dependency version conflict (fc5def7)
 
 ---
 
