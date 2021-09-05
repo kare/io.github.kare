@@ -7,11 +7,11 @@ defaults:
 on:
   workflow_dispatch:
     inputs:
-      name:
+      version:
         description: "Version to release"
         required: true
         default: "0.0.1"
-      home:
+      version-next:
         description: "Next version"
         required: true
         default: "0.0.2-beta.1"
@@ -28,35 +28,41 @@ jobs:
         id: env
         run: |
           go install github.com/bvieira/sv4git/v2/cmd/git-sv@v2.4.0
-          echo "::set-output name=version::${GITHUB_REF#refs/*/}"
       - name: Publish to Maven Central
         run: |
-          echo ${{ env.version }}
+          echo ${{ github.event.inputs.version }}
           SEMVER_REGEX="^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
           function validate_version {
               local version=$1
-              if ! [[ "${{ env.version }}" =~ $SEMVER_REGEX ]]; then
-                  echo "version ${{ env.version }} does not match the semver scheme 'X.Y.Z(-PRERELEASE)(+BUILD)'. See help for more information." 1>&2
+              if ! [[ "$version" =~ $SEMVER_REGEX ]]; then
+                  echo "version $version does not match the semver scheme 'X.Y.Z(-PRERELEASE)(+BUILD)'. See help for more information." 1>&2
                   exit 1
               fi
           }
-          validate_version "${{ env.version }}"
+          validate_version "${{ github.event.inputs.version }}"
 
           # Update CHANGELOG
           git sv changelog > CHANGELOG.md
           git add CHANGELOG.md
-          git commit --message="docs: Update CHANGELOG.md for release ${{ env.version }}"
+          git commit --message="docs: Update CHANGELOG.md for release ${{ github.event.inputs.version }}"
 
           # Update version in gradle.properties
           grtmp=$(mktemp)
-          sed -E 's/^version = ".*"$/version = "'"${{ env.version }}"'"/g' gradle.properties > "$grtmp"
+          sed -E 's/^version = ".*"$/version = "'"${{ github.event.inputs.version }}"'"/g' gradle.properties > "$grtmp"
           mv "$grtmp" gradle.properties
           git add gradle.properties
 
           # Create release commit
-          git commit --message="Release {{ env.version }}"
-          git tag --message="Release {{ env.version }}" --annotate "v{{ env.version }}"
+          git commit --message="Release ${{ github.event.inputs.version }}"
+          git tag --message="Release ${{ github.event.inputs.version }}" --annotate "v${{ github.event.inputs.version }}"
+
+          # Incerement patch version and commit a pre release, but don't do an actual pre-relaase
+          sed -E 's/^version = ".*"$/version = "'${{ github.event.inputs.version-next }}'"/g' gradle.properties > "$grtmp"
+          mv "$grtmp" gradle.properties
+          git add gradle.properties
+          git commit --message="Prepare for release ${{ github.event.inputs.version-next }}"
 
           # Push tags
           git push
           git push --tags
+
