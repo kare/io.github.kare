@@ -50,7 +50,7 @@ jobs:
 
           # Update version in gradle.properties
           grtmp=$(mktemp)
-          sed -E 's/^version = ".*"$/version = '"${{ github.event.inputs.version }}"'/g' gradle.properties > "$grtmp"
+          sed -E 's/^version=.*$/version = '${{ github.event.inputs.version }}'/g' gradle.properties > "$grtmp"
           mv "$grtmp" gradle.properties
           git add gradle.properties
 
@@ -58,8 +58,8 @@ jobs:
           git commit --message="Release ${{ github.event.inputs.version }}"
           git tag --message="Release ${{ github.event.inputs.version }}" --annotate "v${{ github.event.inputs.version }}"
 
-          # Incerement patch version and commit a pre release, but don't do an actual pre-relaase
-          sed -E 's/^version = ".*"$/version = "'${{ github.event.inputs.version-next }}'"/g' gradle.properties > "$grtmp"
+          # Incerement current version to pre release
+          sed -E 's/^version=.*$/version='${{ github.event.inputs.version-next }}'/g' gradle.properties > "$grtmp"
           mv "$grtmp" gradle.properties
           git add gradle.properties
           git commit --message="Prepare for release ${{ github.event.inputs.version-next }}"
