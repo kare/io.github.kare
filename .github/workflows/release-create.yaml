@@ -49,7 +49,7 @@ jobs:
 
           # Update version in gradle.properties
           grtmp=$(mktemp)
-          sed -E 's/^version=.*$/version = '${{ github.event.inputs.version }}'/g' gradle.properties > "$grtmp"
+          sed -E 's/^version=.*$/version='${{ github.event.inputs.version }}'/g' gradle.properties > "$grtmp"
           mv "$grtmp" gradle.properties
           git add gradle.properties
 
