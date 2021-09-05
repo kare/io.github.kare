@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.0.3-beta.8 (2021-09-05)
+
+### Build
+
+- Add sv4git configuration (9c46bd5)
+- Don't use profile or rc for Bash init (944283b)
+
+### Continuous Integration
+
+- Set CI Bash arguments (19676da)
+- Publish pre releases to Maven Central (4d0a777)
+- Set Bash flags (1305419)
+- Define Java version by major release (bb86ef2)
+- Try github.com/bvieira/sv4git for automatic release notes (714f50d)
+
+### Documentation
+
+- Update CHANGELOG.md for release 0.0.3-beta.8 (556731e)
+
+---
+
 ## v0.0.3-beta.7 (2021-09-03)
 
 ### Continuous Integration
@@ -115,10 +136,6 @@
 ---
 
 ## v0.0.1 (2021-05-25)
-
----
-
-## v0.0.1-beta.1 (2021-05-25)
 
 ---
 
