@@ -22,19 +22,19 @@ jobs:
       - name: Set environment
         id: env
         run: |
+          go install github.com/bvieira/sv4git/v2/cmd/git-sv@v2.4.0
           echo "::set-output name=version::${GITHUB_REF#refs/*/}"
           echo "::set-output name=release_notes_file::$(mktemp)"
       - name: Generate Release Notes
         run: |
-          go install github.com/bvieira/sv4git/v2/cmd/git-sv@v2.4.0
           git sv release-notes >> ${{ steps.env.outputs.release_notes_file}}
-      - name: Publish Release to Maven Central
-      - run: |
-          #./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
+      - name: Publish to Maven Central
+        run: |
+          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
       - uses: ncipollo/release-action@v1.8.8
         id: create_release
         with:
-          tag: v${{ steps.env.outputs.version }}
+          tag: ${{ github.ref }}
           bodyFile: ${{ steps.env.outputs.release_notes_file}}
           draft: true
           token: ${{ secrets.GITHUB_TOKEN }}
