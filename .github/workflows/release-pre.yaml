@@ -2,7 +2,7 @@ name: Pre Release
 
 defaults:
   run:
-    shell: bash
+    shell: bash --norc --noprofile -e -u -o pipefail -c
 
 on:
   push:
