@@ -37,5 +37,6 @@ jobs:
         with:
           tag: ${{ github.ref }}
           body: ${{ env.release_notes_body }}
+          prerelease: true
           draft: true
           token: ${{ secrets.GITHUB_TOKEN }}
