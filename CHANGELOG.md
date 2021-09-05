@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.3-beta.9 (2021-09-05)
+
+### Continuous Integration
+
+- Remove Bash arguments (e118202)
+
+### Documentation
+
+- Update CHANGELOG.md for release 0.0.3-beta.9 (e34ce7d)
+
+---
+
 ## v0.0.3-beta.8 (2021-09-05)
 
 ### Build
@@ -132,10 +144,6 @@
 ### Build
 
 - **java-lib:** fail on dependency version conflict (fc5def7)
-
----
-
-## v0.0.1 (2021-05-25)
 
 ---
 
