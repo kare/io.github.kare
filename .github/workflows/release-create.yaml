@@ -31,6 +31,7 @@ jobs:
           echo "::set-output name=version::${GITHUB_REF#refs/*/}"
       - name: Publish to Maven Central
         run: |
+          echo ${{ env.version }}
           SEMVER_REGEX="^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
           function validate_version {
               local version=$1
