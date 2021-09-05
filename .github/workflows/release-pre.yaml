@@ -23,9 +23,9 @@ jobs:
         id: env
         run: |
           go install github.com/bvieira/sv4git/v2/cmd/git-sv@v2.4.0
-          echo "::set-output name=version::${GITHUB_REF#refs/*/}"
           echo "::set-output name=release_notes_file::$(mktemp)"
       - name: Generate Release Notes
+        id: release-notes
         run: |
           git sv release-notes | tee ${{ steps.env.outputs.release_notes_file }}
           echo "::set-output name=release_notes_body::$(cat ${{ steps.env.outputs.release_notes_file }})"
@@ -36,7 +36,7 @@ jobs:
         id: create_release
         with:
           tag: ${{ github.ref }}
-          body: ${{ env.release_notes_body }}
+          body: ${{ steps.env.outputs.release_notes_body }}
           prerelease: true
           draft: true
           token: ${{ secrets.GITHUB_TOKEN }}
