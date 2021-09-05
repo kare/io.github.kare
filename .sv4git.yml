@@ -1,0 +1,66 @@
+version: "1.0"
+
+versioning:
+    update-major: []
+    update-minor:
+        - feat
+    update-patch:
+        - build
+        - ci
+        - chore
+        - docs
+        - fix
+        - perf
+        - refactor
+        - style
+        - test
+    ignore-unknown: false
+
+tag:
+    pattern: 'v%d+.%d+.%d+'
+
+release-notes:
+    headers:
+        breaking-change: Breaking Changes
+        feat: Features
+        fix: Bug Fixes
+        build: Build
+        ci: Continuous Integration
+        docs: Documentation
+        perf: Performance
+        test: Testing
+
+branches:
+    prefix: ([a-z]+\/)?
+    suffix: (-.*)?
+    disable-issue: false
+    skip:
+        - main
+    skip-detached: false
+
+commit-message:
+    types:
+        - feat
+        - build
+        - ci
+        - chore
+        - docs
+        - fix
+        - perf
+        - refactor
+        - revert
+        - style
+        - test
+    scope:
+        values:
+          - junit
+          - ByteArrays
+          - java-lib
+          - make
+          - readme
+          - deps
+    footer:
+        issue:
+          use-hash: false
+    issue:
+        regex: '[0-9]+' # Regex for issue id.
