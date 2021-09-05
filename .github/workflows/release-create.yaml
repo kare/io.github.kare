@@ -31,6 +31,16 @@ jobs:
           echo "::set-output name=version::${GITHUB_REF#refs/*/}"
       - name: Publish to Maven Central
         run: |
+          SEMVER_REGEX="^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
+          function validate_version {
+              local version=$1
+              if ! [[ "$version" =~ $SEMVER_REGEX ]]; then
+                  echo "version $version does not match the semver scheme 'X.Y.Z(-PRERELEASE)(+BUILD)'. See help for more information." 1>&2
+                  exit 1
+              fi
+          }
+          validate_version "$version"
+
           # Update CHANGELOG
           git sv changelog > CHANGELOG.md
           git add CHANGELOG.md
