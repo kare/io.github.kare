@@ -33,6 +33,7 @@ jobs:
       - name: Create and prepare for Release
         env:
           VERSION: ${{ github.event.inputs.version }}
+          VERSION_NEXT: ${{ github.event.inputs.version-next }}
         run: |
           SEMVER_REGEX="^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
           function validate_version {
@@ -43,6 +44,7 @@ jobs:
               fi
           }
           validate_version "$VERSION"
+          validate_version "$VERSION_NEXT"
 
           # Update CHANGELOG
           git sv changelog --all > CHANGELOG.md
@@ -68,10 +70,10 @@ jobs:
           git tag --message="Release $VERSION" --annotate "v$VERSION"
 
           # Incerement current version to pre release
-          sed -E 's/^version=.*$/version='$VERSION'/g' gradle.properties > "$grtmp"
+          sed -E 's/^version=.*$/version='$VERSION_NEXT'/g' gradle.properties > "$grtmp"
           mv "$grtmp" gradle.properties
           git add gradle.properties
-          git commit --message="Prepare for release $VERSION"
+          git commit --message="Prepare for release $VERSION_NEXT"
 
           # Push tags
           git push
