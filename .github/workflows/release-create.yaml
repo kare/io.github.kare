@@ -53,7 +53,7 @@ jobs:
 
           # Update RELEASE NOTES
           mv RELEASE-NOTES.md OLD-RELEASE-NOTES.md
-          git sv release-notes --tag $VERSION > RELEASE-NOTES.md
+          git sv release-notes --tag v$VERSION > RELEASE-NOTES.md
           cat OLD-RELEASE-NOTES.md >> RELEASE-NOTES.md
           rm -f OLD-RELEASE-NOTES.md
           git add RELEASE-NOTES.md
