@@ -1,3 +1,13 @@
+## v0.0.3 (2021-09-06)
+
+### Continuous Integration
+
+- Fix semver regex (8227600)
+
+### Documentation
+
+- Update CHANGELOG.md for release 0.0.3-beta.14 (57125ee)
+
 ## v0.0.1 (2021-09-06)
 
 ### Documentation
