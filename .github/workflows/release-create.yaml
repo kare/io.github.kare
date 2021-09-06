@@ -67,7 +67,7 @@ jobs:
           git add gradle.properties
 
           # Create release commit
-          git commit --message="Release $VERSION"
+          git commit --allow-empty --message="Release $VERSION"
           git tag --message="Release $VERSION" --annotate "v$VERSION"
 
           # Incerement current version to pre release
