@@ -1,3 +1,9 @@
+## v0.0.1 (2021-09-06)
+
+### Documentation
+
+- Update CHANGELOG.md for release 0.0.3-beta.13 (a0d2ece)
+
 ## v0.0.2 (2021-06-02)
 
 ### Features
