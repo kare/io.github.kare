@@ -2,6 +2,17 @@
 
 ### Continuous Integration
 
+- Add make recipe for GitHub git config (9b9d836)
+- Tag matchers are globs not regex (492e6c3)
+
+### Documentation
+
+- Update CHANGELOG.md for release 0.0.3-beta.15 (1b0e431)
+
+## v0.0.3 (2021-09-06)
+
+### Continuous Integration
+
 - Fix semver regex (8227600)
 
 ### Documentation
