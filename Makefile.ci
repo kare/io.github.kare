@@ -1,0 +1,21 @@
+LANG = en_US.UTF-8
+SHELL = /bin/bash
+.SHELLFLAGS = --noprofile --norc -e -u -o pipefail -c
+.DEFAULT_GOAL = $(HOME)/go/bin/git-sv
+
+CURL := curl
+CURL_FLAGS := --location --silent
+
+$(HOME)/bin:
+	@mkdir -p $@
+
+$(HOME)/bin/git-sv: $(HOME)/bin
+	env
+	$(CURL) $(CURL_FLAGS) --output git-sv.tar.gz https://github.com/bvieira/sv4git/releases/download/v2.4.0/git-sv_2.4.0_linux_amd64.tar.gz
+	tar xvf git-sv.tar.gz
+	chmod 755 git-sv
+	mv git-sv $(HOME)/bin
+	rm -f git-sv.tar.gz
+
+.PHONY: install-tools
+install-tools: $(HOME)/bin/git-sv

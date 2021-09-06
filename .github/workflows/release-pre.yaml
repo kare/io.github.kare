@@ -16,9 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/setup-go@v2.1.4
-        with:
-          go-version: "1.16"
       - uses: actions/cache@v2.1.6
         with:
           path: |
@@ -30,8 +27,8 @@ jobs:
       - name: Set environment
         id: env
         run: |
-          env
-          go install github.com/bvieira/sv4git/v2/cmd/git-sv@v2.4.0
+          make -f Makefile.ci install-tools
+          echo "$HOME/bin" >> $GITHUB_PATH
           echo "::set-output name=release_notes_file::$(mktemp)"
       - name: Generate Release Notes
         id: release-notes
