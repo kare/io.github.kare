@@ -51,14 +51,6 @@ jobs:
           git add CHANGELOG.md
           git commit --message="docs: Update CHANGELOG.md for release $VERSION"
 
-          # Update RELEASE NOTES
-          mv RELEASE-NOTES.md OLD-RELEASE-NOTES.md
-          git sv release-notes --tag v$VERSION > RELEASE-NOTES.md
-          cat OLD-RELEASE-NOTES.md >> RELEASE-NOTES.md
-          rm -f OLD-RELEASE-NOTES.md
-          git add RELEASE-NOTES.md
-          git commit --message="docs: Update RELEASE-NOTES.md for release $VERSION"
-
           # Update version in gradle.properties
           grtmp=$(mktemp)
           sed -E 's/^version=.*$/version='$VERSION'/g' gradle.properties > "$grtmp"

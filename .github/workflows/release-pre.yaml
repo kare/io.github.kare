@@ -35,8 +35,7 @@ jobs:
       - name: Generate Release Notes
         id: release-notes
         run: |
-          git sv release-notes --tag v${{ steps.env.outputs.version }} >> ${{ steps.env.outputs.release_notes_file }}
-          echo "::set-output name=release_notes_body::$(cat ${{ steps.env.outputs.release_notes_file }})"
+          git sv release-notes >> ${{ steps.env.outputs.release_notes_file }}
       - name: Publish to Maven Central
         env:
           ORG_GRADLE_PROJECT_SIGNINGKEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
@@ -50,7 +49,7 @@ jobs:
         id: create_release
         with:
           tag: ${{ github.ref }}
-          body: ${{ steps.release-notes.outputs.release_notes_body }}
+          bodyFile: ${{ steps.env.outputs.release_notes_file}}
           prerelease: true
           draft: true
           token: ${{ secrets.GITHUB_TOKEN }}
