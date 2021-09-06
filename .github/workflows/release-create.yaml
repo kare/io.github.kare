@@ -30,7 +30,7 @@ jobs:
           echo "$HOME/bin" >> $GITHUB_PATH
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
-      - name: Create and prepare for Release
+      - name: Create Release ${{ github.event.inputs.version }} and prepare for Release ${{ github.event.inputs.version-next }}
         env:
           VERSION: ${{ github.event.inputs.version }}
           VERSION_NEXT: ${{ github.event.inputs.version-next }}
