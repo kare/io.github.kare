@@ -7,10 +7,10 @@ defaults:
 on:
   push:
     tags: # https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
-      - '^v([0-9]+)\.([0-9]+)\.([0-9]+)\-(?:alpha|beta)\.[0-9]*$'
+      - '^v([0-9]+)\.([0-9]+)\.([0-9]+)-(?:alpha|beta)\.[0-9]+$'
 
 jobs:
-  release:
+  pre-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4

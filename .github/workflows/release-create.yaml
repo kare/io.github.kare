@@ -75,5 +75,4 @@ jobs:
           git commit --message="Prepare for release $VERSION_NEXT"
 
           # Push tags
-          git push
-          git push --tags
+          git push --follow-tags
