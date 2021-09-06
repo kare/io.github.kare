@@ -28,8 +28,7 @@ jobs:
         run: |
           make -f Makefile.ci install-tools
           echo "$HOME/bin" >> $GITHUB_PATH
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "GitHub Actions"
+          make -f Makefile.ci git-config
       - name: Create Release ${{ github.event.inputs.version }} and prepare for Release ${{ github.event.inputs.version-next }}
         env:
           VERSION: ${{ github.event.inputs.version }}
