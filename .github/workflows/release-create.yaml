@@ -30,7 +30,7 @@ jobs:
           go install github.com/bvieira/sv4git/v2/cmd/git-sv@v2.4.0
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
-      - name: Publish to Maven Central
+      - name: Create and prepare for Release
         run: |
           SEMVER_REGEX="^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
           function validate_version {
@@ -43,9 +43,17 @@ jobs:
           validate_version "${{ github.event.inputs.version }}"
 
           # Update CHANGELOG
-          git sv changelog > CHANGELOG.md
+          git sv changelog --all > CHANGELOG.md
           git add CHANGELOG.md
           git commit --message="docs: Update CHANGELOG.md for release ${{ github.event.inputs.version }}"
+
+          # Update RELEASE NOTES
+          mv RELEASE-NOTES.md OLD-RELEASE-NOTES.md
+          git sv release-notes > RELEASE-NOTES.md
+          cat OLD-RELEASE-NOTES.md >> RELEASE-NOTES.md
+          rm -f OLD-RELEASE-NOTES.md
+          git add RELEASE-NOTES.md
+          git commit --message="docs: Update RELEASE-NOTES.md for release ${{ github.event.inputs.version }}"
 
           # Update version in gradle.properties
           grtmp=$(mktemp)
@@ -66,4 +74,3 @@ jobs:
           # Push tags
           git push
           git push --tags
-
