@@ -31,6 +31,8 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
       - name: Create and prepare for Release
+        env:
+          VERSION: ${{ github.event.inputs.version }}
         run: |
           SEMVER_REGEX="^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
           function validate_version {
@@ -40,12 +42,12 @@ jobs:
                   exit 1
               fi
           }
-          validate_version "${{ github.event.inputs.version }}"
+          validate_version "$VERSION"
 
           # Update CHANGELOG
           git sv changelog --all > CHANGELOG.md
           git add CHANGELOG.md
-          git commit --message="docs: Update CHANGELOG.md for release ${{ github.event.inputs.version }}"
+          git commit --message="docs: Update CHANGELOG.md for release $VERSION"
 
           # Update RELEASE NOTES
           mv RELEASE-NOTES.md OLD-RELEASE-NOTES.md
@@ -53,23 +55,23 @@ jobs:
           cat OLD-RELEASE-NOTES.md >> RELEASE-NOTES.md
           rm -f OLD-RELEASE-NOTES.md
           git add RELEASE-NOTES.md
-          git commit --message="docs: Update RELEASE-NOTES.md for release ${{ github.event.inputs.version }}"
+          git commit --message="docs: Update RELEASE-NOTES.md for release $VERSION"
 
           # Update version in gradle.properties
           grtmp=$(mktemp)
-          sed -E 's/^version=.*$/version='${{ github.event.inputs.version }}'/g' gradle.properties > "$grtmp"
+          sed -E 's/^version=.*$/version='$VERSION'/g' gradle.properties > "$grtmp"
           mv "$grtmp" gradle.properties
           git add gradle.properties
 
           # Create release commit
-          git commit --message="Release ${{ github.event.inputs.version }}"
-          git tag --message="Release ${{ github.event.inputs.version }}" --annotate "v${{ github.event.inputs.version }}"
+          git commit --message="Release $VERSION"
+          git tag --message="Release $VERSION" --annotate "v$VERSION"
 
           # Incerement current version to pre release
-          sed -E 's/^version=.*$/version='${{ github.event.inputs.version-next }}'/g' gradle.properties > "$grtmp"
+          sed -E 's/^version=.*$/version='$VERSION'/g' gradle.properties > "$grtmp"
           mv "$grtmp" gradle.properties
           git add gradle.properties
-          git commit --message="Prepare for release ${{ github.event.inputs.version-next }}"
+          git commit --message="Prepare for release $VERSION"
 
           # Push tags
           git push
