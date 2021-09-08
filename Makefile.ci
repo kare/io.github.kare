@@ -1,7 +1,7 @@
-LANG = en_US.UTF-8
-SHELL = /bin/bash
-.SHELLFLAGS = --noprofile --norc -e -u -o pipefail -c
-.DEFAULT_GOAL = $(HOME)/go/bin/git-sv
+LANG := en_US.UTF-8
+SHELL := /bin/bash
+.SHELLFLAGS := --noprofile --norc -e -u -o pipefail -c
+.DEFAULT_GOAL := $(HOME)/go/bin/git-sv
 
 CURL := curl
 CURL_FLAGS := --location --silent

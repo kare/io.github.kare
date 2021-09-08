@@ -1,9 +1,9 @@
-LANG = en_US.UTF-8
-SHELL = /bin/bash
-.SHELLFLAGS = --noprofile --norc -eu -o pipefail -c # run '/bin/bash ... -c /bin/cmd'
-.DEFAULT_GOAL = coverage
+LANG := en_US.UTF-8
+SHELL := /bin/bash
+.SHELLFLAGS := --noprofile --norc -e -u -o pipefail -c
+.DEFAULT_GOAL := coverage
 
-gradlew = ./gradlew --console verbose
+gradlew := ./gradlew --console verbose
 
 .PHONY: publish-local
 publish-local: ## Publish to local Maven repository
