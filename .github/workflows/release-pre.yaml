@@ -31,7 +31,7 @@ jobs:
           make -f Makefile.ci install-tools
           echo "$HOME/bin" >> $GITHUB_PATH
           echo "::set-output name=release_notes_file::$(mktemp)"
-          echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+          echo "::set-output name=version::${GITHUB_REF/refs\/tags\//}"
       - name: Generate Release Notes
         id: release-notes
         run: |
