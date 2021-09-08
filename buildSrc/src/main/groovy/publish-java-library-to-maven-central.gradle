@@ -20,10 +20,9 @@ void sign(Project project) {
 					!project.version.toString().endsWith("-SNAPSHOT") &&
 					!project.hasProperty("skipSigning")
 		}
-		def signingKeyId = project.findProperty("signingKeyId")
 		def signingKey = project.findProperty("signingKey")
 		def signingPassword = project.findProperty("signingPassword")
-		useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+		useInMemoryPgpKeys(signingKey, signingPassword)
 		sign publishing.publications.maven
 	}
 }
