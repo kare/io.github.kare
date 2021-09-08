@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.0.3-beta.15 (2021-09-06)
+
+### Continuous Integration
+
+- Add make recipe for GitHub git config (9b9d836)
+- Tag matchers are globs not regex (492e6c3)
+
+### Documentation
+
+- Update RELEASE-NOTES.md for release 0.0.3-beta.15 (9f76eb4)
+- Update CHANGELOG.md for release 0.0.3-beta.15 (1b0e431)
+
+---
+
 ## v0.0.3-beta.14 (2021-09-06)
 
 ### Continuous Integration
