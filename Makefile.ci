@@ -17,7 +17,8 @@ $(HOME)/bin/git-sv: $(HOME)/bin
 	rm -f git-sv.tar.gz
 
 .PHONY: install-tools
-install-tools: $(HOME)/bin/git-sv
+install-tools: $(HOME)/bin/git-chglog
+	echo "$HOME/bin" >> $GITHUB_PATH
 
 .PHONY: git-config
 git-config:

@@ -10,11 +10,11 @@ on:
       version:
         description: "Version to release"
         required: true
-        default: "0.0.2-beta.13"
+        default: "0.0.3-beta.17"
       version-next:
         description: "Next version"
         required: true
-        default: "0.0.3-beta.14"
+        default: "0.0.3-beta.18"
 
 jobs:
   release:
@@ -24,10 +24,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set environment
-        id: env
         run: |
-          make -f Makefile.ci install-tools
-          echo "$HOME/bin" >> $GITHUB_PATH
           make -f Makefile.ci git-config
       - name: Create Release ${{ github.event.inputs.version }} and prepare for Release ${{ github.event.inputs.version-next }}
         env:
@@ -45,11 +42,6 @@ jobs:
           }
           validate_version "$VERSION"
           validate_version "$VERSION_NEXT"
-
-          # Update CHANGELOG
-          git sv changelog --all > CHANGELOG.md
-          git add CHANGELOG.md
-          git commit --message="docs: Update CHANGELOG.md for release $VERSION"
 
           # Update version in gradle.properties
           grtmp=$(mktemp)
