@@ -44,7 +44,7 @@ jobs:
           ORG_GRADLE_PROJECT_SONATYPEPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD }}
         run: |
           ./gradlew --stacktrace --info publishToSonatype closeAndReleaseSonatypeStagingRepository
-      - uses: ncipollo/release-action@v1.8.8
+      - uses: ncipollo/release-action@v1.8.9
         id: create_release
         with:
           tag: ${{ github.ref }}
