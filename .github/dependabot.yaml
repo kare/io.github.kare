@@ -1,8 +1,12 @@
-
+#
 # https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates
+#
+# https://dependabot.com/docs/config-file/validator/
+#
 
 version: 2
 updates:
+
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -16,6 +20,9 @@ updates:
       - kare
     assignees:
       - kare
+    labels:
+      - ci
+
   - package-ecosystem: gradle
     directory: /
     schedule:
@@ -29,3 +36,5 @@ updates:
       - kare
     assignees:
       - kare
+    labels:
+      - build
