@@ -51,7 +51,7 @@ spotless {
 			include "*/src/*/java/**/*.java"
 		}
 		removeUnusedImports()
-		licenseHeaderFile "LICENSE-HEADER.txt"
+		licenseHeaderFile "gradle/LICENSE-HEADER.txt"
 		googleJavaFormat("1.11.0")
 	}
 }
