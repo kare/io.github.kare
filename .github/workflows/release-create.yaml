@@ -54,6 +54,9 @@ jobs:
           git commit --allow-empty --message="Release $VERSION"
           git tag --message="Release $VERSION" --annotate "v$VERSION"
 
+          git push
+          git push --tags
+
           # Incerement current version to next version
           sed -E 's/^version=.*$/version='$NEXT_DEV_VERSION'/g' gradle.properties > "$grtmp"
           mv "$grtmp" gradle.properties
