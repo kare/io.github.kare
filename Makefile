@@ -3,7 +3,17 @@ SHELL := /bin/bash
 .SHELLFLAGS := --noprofile --norc -e -u -o pipefail -c
 .DEFAULT_GOAL := coverage
 
+YAMLLINT := /usr/local/bin/yamllint
+YAMLLINTFLAGS := --config-file yamllint-config.yaml
+
 gradlew := ./gradlew --console verbose
+
+$(YAMLLINT):
+	pip3 install --user yamllint
+
+.PHONY: lint-yaml
+lint-yaml: $(YAMLLINT)
+	$(YAMLLINT) $(YAMLLINTFLAGS) .
 
 .PHONY: publish-local
 publish-local: ## Publish to local Maven repository
