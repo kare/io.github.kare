@@ -4,7 +4,7 @@ plugins {
 	id "maven-publish"
 }
 
-def hasSigningKey = project.hasProperty("signingKeyId") || project.hasProperty("signingKey")
+def hasSigningKey = project.hasProperty("signingKey")
 if (hasSigningKey) {
 	sign(project)
 }
@@ -16,9 +16,8 @@ signing {
 void sign(Project project) {
 	project.signing {
 		required {
-			project.gradle.taskGraph.hasTask("publish") &&
-					!project.version.toString().endsWith("-SNAPSHOT") &&
-					!project.hasProperty("skipSigning")
+			!project.version.toString().endsWith("-SNAPSHOT") &&
+			!project.hasProperty("skipSigning")
 		}
 		def signingKey = project.findProperty("signingKey")
 		def signingPassword = project.findProperty("signingPassword")
@@ -60,7 +59,6 @@ publishing {
 					system = "GitHub"
 					url = "https://github.com/kare/io.github.kare/issues"
 				}
-
 				ciManagement {
 					system = "GitHub"
 					url = "https://github.com/kare/io.github.kare/actions"
