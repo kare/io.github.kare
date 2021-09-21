@@ -25,6 +25,9 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
+      - run: |
+          ./gradlew --stacktrace sign
+          exit 1
       - name: Set environment
         run: |
           make -f Makefile.ci git-config
