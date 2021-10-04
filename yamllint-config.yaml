@@ -10,10 +10,7 @@ rules:
     max-spaces-after: 1
   trailing-spaces:
     level: error
-  line-length:
-    max: 140
-    allow-non-breakable-words: true
-    allow-non-breakable-inline-mappings: true
+  line-length: disable
   comments:
     require-starting-space: false
     ignore-shebangs: false
