@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Lint YAML files
-        uses: ibiqlik/action-yamllint@v3.0.4
+        uses: ibiqlik/action-yamllint@v3.1
         with:
           file_or_dir: .
           strict: true
