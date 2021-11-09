@@ -1,10 +1,5 @@
 ---
 name: CI
-
-defaults:
-  run:
-    shell: bash
-
 on:
   push:
     branches:
@@ -12,7 +7,12 @@ on:
   pull_request:
     branches:
       - main
-
+concurrency:
+  group: ci-${{ github.head_ref }}
+  cancel-in-progress: true
+defaults:
+  run:
+    shell: bash
 jobs:
   build:
     name: Build
