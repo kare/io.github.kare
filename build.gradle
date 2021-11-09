@@ -21,7 +21,6 @@ nexusPublishing {
 	connectTimeout.set(Duration.ofMinutes(5))
 	clientTimeout.set(Duration.ofMinutes(5))
 }
-println("found sonatype username: '" + project.findProperty("sonatypeUsername") + "'")
 allprojects {
 	apply plugin: "jacoco"
 
@@ -43,11 +42,12 @@ subprojects {
 
 	publishing {
 		publications {
-			maven(MavenPublication) {
+			mavenJava(MavenPublication) {
 				from(project.components.java)
 				pom {
 					afterEvaluate {
 						description = "${project.description}"
+						name = "${project.name}"
 					}
 					url = "https://github.com/kare/io.github.kare"
 					inceptionYear = "2021"
@@ -88,10 +88,6 @@ subprojects {
 	}
 	def hasSigningKey = project.hasProperty("signingKey")
 	if (hasSigningKey) {
-		sign(project)
-	} else {
-		println 'WARNING: No property \'signingKey\' found. Artifact signing will be skipped.'
-	}
 	signing {
 		project.signing {
 			required {
@@ -100,8 +96,11 @@ subprojects {
 			def signingKey = project.findProperty("signingKey")
 			def signingPassword = project.findProperty("signingPassword")
 			useInMemoryPgpKeys(signingKey, signingPassword)
-			sign publishing.publications.maven
+			sign publishing.publications.mavenJava
 		}
+	}
+	} else {
+		println 'WARNING: No property \'signingKey\' found. Artifact signing will be skipped.'
 	}
 }
 
