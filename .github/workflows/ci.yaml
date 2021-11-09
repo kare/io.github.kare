@@ -30,8 +30,8 @@ jobs:
           config_file: yamllint-config.yaml
       - uses: actions/setup-java@v2.3.1
         with:
-          java-version: '11'
-          distribution: 'zulu'
+          java-version: 11
+          distribution: adopt
       - uses: actions/cache@v2.1.6
         with:
           path: |
