@@ -43,7 +43,7 @@ subprojects {
 
 	publishing {
 		publications {
-			mavenJava(MavenPublication) {
+			maven(MavenPublication) {
 				from(project.components.java)
 				pom {
 					afterEvaluate {
@@ -93,19 +93,15 @@ subprojects {
 		println 'WARNING: No property \'signingKey\' found. Artifact signing will be skipped.'
 	}
 	signing {
-		sign publishing.publications
-	}
-}
-
-void sign(Project project) {
-	project.signing {
-		required {
-			!project.hasProperty("skipSigning")
+		project.signing {
+			required {
+				!project.hasProperty("skipSigning")
+			}
+			def signingKey = project.findProperty("signingKey")
+			def signingPassword = project.findProperty("signingPassword")
+			useInMemoryPgpKeys(signingKey, signingPassword)
+			sign publishing.publications.maven
 		}
-		def signingKey = project.findProperty("signingKey")
-		def signingPassword = project.findProperty("signingPassword")
-		useInMemoryPgpKeys(signingKey, signingPassword)
-		sign publishing.publications.mavenJava
 	}
 }
 
