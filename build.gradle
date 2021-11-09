@@ -21,7 +21,7 @@ nexusPublishing {
 	connectTimeout.set(Duration.ofMinutes(5))
 	clientTimeout.set(Duration.ofMinutes(5))
 }
-
+println("found sonatype username: '" + project.findProperty("sonatypeUsername") + "'")
 allprojects {
 	apply plugin: "jacoco"
 
@@ -89,6 +89,8 @@ subprojects {
 	def hasSigningKey = project.hasProperty("signingKey")
 	if (hasSigningKey) {
 		sign(project)
+	} else {
+		println 'WARNING: No property \'signingKey\' found. Artifact signing will be skipped.'
 	}
 	signing {
 		sign publishing.publications
