@@ -23,7 +23,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2.4.0
         with:
-          fetch-depth: 0
           token: ${{ secrets.PAT }}
       - run: |
           ./gradlew --stacktrace sign
