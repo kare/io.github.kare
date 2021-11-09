@@ -1,4 +1,4 @@
 plugins {
 	id "java-library-convention"
-	id "publish-java-library-to-maven-central"
 }
+description = "Common Java Utilities"

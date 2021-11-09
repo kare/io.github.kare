@@ -16,24 +16,31 @@ signing {
 void sign(Project project) {
 	project.signing {
 		required {
-			!project.version.toString().endsWith("-SNAPSHOT") &&
 			!project.hasProperty("skipSigning")
 		}
 		def signingKey = project.findProperty("signingKey")
 		def signingPassword = project.findProperty("signingPassword")
 		useInMemoryPgpKeys(signingKey, signingPassword)
-		sign publishing.publications.maven
+		sign publishing.publications.mavenJava
 	}
 }
 
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
-			from(components.java)
+		mavenJava(org.gradle.api.publish.maven.MavenPublication) {
+			from(project.components.java)
+			/*versionMapping {
+				usage("java-api") {
+					fromResolutionOf("runtimeClasspath")
+				}
+				usage("java-runtime") {
+					fromResolutionResult()
+				}
+			}*/
 			pom {
-				name = "${project.name}"
-				group="${project.group}"
-				description = "${project.description}"
+				afterEvaluate {
+					description = "${project.description}"
+				}
 				url = "https://github.com/kare/io.github.kare"
 				inceptionYear = "2021"
 				licenses {

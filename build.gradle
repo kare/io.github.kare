@@ -21,6 +21,7 @@ nexusPublishing {
 	connectTimeout.set(Duration.ofMinutes(5))
 	clientTimeout.set(Duration.ofMinutes(5))
 }
+
 allprojects {
 	apply plugin: "jacoco"
 
@@ -35,8 +36,75 @@ allprojects {
 
 subprojects {
 	apply plugin: "java-library"
+	apply plugin: "signing"
+	apply plugin: "maven-publish"
 
 	classes.dependsOn spotlessApply
+
+	publishing {
+		publications {
+			mavenJava(MavenPublication) {
+				from(project.components.java)
+				pom {
+					afterEvaluate {
+						description = "${project.description}"
+					}
+					url = "https://github.com/kare/io.github.kare"
+					inceptionYear = "2021"
+					licenses {
+						license {
+							name = "Apache-2.0"
+							url = "https://opensource.org/licenses/Apache-2.0"
+							distribution = "repo"
+						}
+					}
+					developers {
+						developer {
+							id = "kare"
+							name = "Kare Nuorteva"
+							email = "kare.nuorteva@me.com"
+						}
+					}
+					scm {
+						connection = "scm:git:https://github.com/kare/io.github.kare"
+						developerConnection = "scm:git:ssh://github.com/kare/io.github.kare.git"
+						url = "https://github.com/kare/io.github.kare"
+					}
+					issueManagement {
+						system = "GitHub"
+						url = "https://github.com/kare/io.github.kare/issues"
+					}
+					ciManagement {
+						system = "GitHub"
+						url = "https://github.com/kare/io.github.kare/actions"
+					}
+					organization {
+						name = "Kare Nuorteva"
+						url = "https://karenuorteva.fi/"
+					}
+				}
+			}
+		}
+	}
+	def hasSigningKey = project.hasProperty("signingKey")
+	if (hasSigningKey) {
+		sign(project)
+	}
+	signing {
+		sign publishing.publications
+	}
+}
+
+void sign(Project project) {
+	project.signing {
+		required {
+			!project.hasProperty("skipSigning")
+		}
+		def signingKey = project.findProperty("signingKey")
+		def signingPassword = project.findProperty("signingPassword")
+		useInMemoryPgpKeys(signingKey, signingPassword)
+		sign publishing.publications.mavenJava
+	}
 }
 
 spotless {
@@ -74,7 +142,7 @@ tasks.register("javadoc-all", Javadoc) {
 	description = "Generate Javadocs from all sub projects"
 	group = "Documentation"
 
-	def heading = "${project.name} ${project.version} API"
+	def heading = "io.github.kare ${project.version} API"
 	title = heading
 	options.windowTitle = heading
 	options.links = [
