@@ -7,11 +7,6 @@ plugins {
 
 def isLocalDevEnv = (System.getenv("CI") == null)
 
-dependencies {
-	//testImplementation("nl.jqno.equalsverifier:equalsverifier:3.7.1")
-	testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-}
 configurations.all {
 	resolutionStrategy {
 		failOnVersionConflict()
