@@ -34,6 +34,9 @@ allprojects {
 }
 
 subprojects {
+	ext {
+		junitJupiterApi = "5.7.2"
+	}
 	apply plugin: "java-library"
 	apply plugin: "signing"
 	apply plugin: "maven-publish"
