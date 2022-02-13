@@ -41,7 +41,7 @@ mv "$grtmp" gradle.properties
 git add gradle.properties
 
 # Create release commit
-git commit --message="Release ${version}"
+git commit --message="chore: Release ${version}"
 git tag --message="Release ${version}" --annotate "v${version}"
 
 # Push tags
