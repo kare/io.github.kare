@@ -21,6 +21,7 @@ nexusPublishing {
 	connectTimeout.set(Duration.ofMinutes(5))
 	clientTimeout.set(Duration.ofMinutes(5))
 }
+
 allprojects {
 	apply plugin: "jacoco"
 
@@ -91,17 +92,17 @@ subprojects {
 	}
 	def hasSigningKey = project.hasProperty("signingKey")
 	if (hasSigningKey) {
-	signing {
-		project.signing {
-			required {
-				!project.hasProperty("skipSigning")
+		signing {
+			project.signing {
+				required {
+					!project.hasProperty("skipSigning")
+				}
+				def signingKey = project.findProperty("signingKey")
+				def signingPassword = project.findProperty("signingPassword")
+				useInMemoryPgpKeys(signingKey, signingPassword)
+				sign publishing.publications.mavenJava
 			}
-			def signingKey = project.findProperty("signingKey")
-			def signingPassword = project.findProperty("signingPassword")
-			useInMemoryPgpKeys(signingKey, signingPassword)
-			sign publishing.publications.mavenJava
 		}
-	}
 	} else {
 		println 'WARNING: No property \'signingKey\' found. Artifact signing will be skipped.'
 	}
