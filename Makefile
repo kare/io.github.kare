@@ -4,7 +4,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := coverage
 
 YAMLLINT := /usr/local/bin/yamllint
-YAMLLINTFLAGS := --config-file yamllint-config.yaml
+YAMLLINTFLAGS := --config-file .yamllint
 
 gradlew := ./gradlew --console verbose
 

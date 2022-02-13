@@ -27,7 +27,7 @@ jobs:
           file_or_dir: .
           strict: true
           no_warnings: false
-          config_file: yamllint-config.yaml
+          config_file: .yamllint
       - uses: actions/setup-java@v2.5.0
         with:
           java-version: 11
