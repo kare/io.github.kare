@@ -53,9 +53,9 @@ public final class ByteArrays {
   public static void reverse(byte[] bytes) {
     for (int i = 0; i < bytes.length / 2; i++) {
       final int n = bytes.length - 1 - i;
-      bytes[i] = (byte) ((int) bytes[i] ^ (int) bytes[n]);
-      bytes[n] = (byte) ((int) bytes[i] ^ (int) bytes[n]);
-      bytes[i] = (byte) ((int) bytes[i] ^ (int) bytes[n]);
+      bytes[i] = (byte) (bytes[i] ^ bytes[n]);
+      bytes[n] = (byte) (bytes[i] ^ bytes[n]);
+      bytes[i] = (byte) (bytes[i] ^ bytes[n]);
     }
   }
 
