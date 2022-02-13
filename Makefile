@@ -6,7 +6,7 @@ SHELL := /bin/bash
 YAMLLINT := /usr/local/bin/yamllint
 YAMLLINTFLAGS := --config-file .yamllint
 
-gradlew := ./gradlew --console verbose
+gradlew := ./gradlew --console plain
 
 $(YAMLLINT):
 	pip3 install --user yamllint
