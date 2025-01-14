@@ -17,7 +17,6 @@ updates:
       timezone: Europe/Helsinki
     commit-message:
       prefix: ci
-      include: scope
     reviewers:
       - kare
     assignees:
@@ -33,7 +32,6 @@ updates:
       timezone: Europe/Helsinki
     commit-message:
       prefix: build
-      include: scope
     reviewers:
       - kare
     assignees:
