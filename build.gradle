@@ -119,7 +119,7 @@ spotless {
 		}
 		removeUnusedImports()
 		licenseHeaderFile "gradle/LICENSE-HEADER.txt"
-		googleJavaFormat("1.14.0")
+		googleJavaFormat("1.17.0")
 	}
 }
 
