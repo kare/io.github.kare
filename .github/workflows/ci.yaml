@@ -7,9 +7,6 @@ on:
   pull_request:
     branches:
       - main
-concurrency:
-  group: ci-${{ github.head_ref }}
-  cancel-in-progress: true
 defaults:
   run:
     shell: bash
@@ -32,7 +29,7 @@ jobs:
         with:
           java-version: 11
           distribution: adopt
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4.2.0
         with:
           path: |
             ~/.gradle/caches
