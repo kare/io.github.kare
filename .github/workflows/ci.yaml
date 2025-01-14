@@ -28,7 +28,7 @@ jobs:
           strict: true
           no_warnings: false
           config_file: .yamllint
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4.6.0
         with:
           java-version: 11
           distribution: adopt
