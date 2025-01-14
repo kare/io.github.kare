@@ -94,9 +94,7 @@ subprojects {
 	if (hasSigningKey) {
 		signing {
 			project.signing {
-				required {
-					!project.hasProperty("skipSigning")
-				}
+				required = !project.hasProperty("skipSigning")
 				def signingKey = project.findProperty("signingKey")
 				def signingPassword = project.findProperty("signingPassword")
 				useInMemoryPgpKeys(signingKey, signingPassword)
@@ -121,7 +119,7 @@ spotless {
 		}
 		removeUnusedImports()
 		licenseHeaderFile "gradle/LICENSE-HEADER.txt"
-		googleJavaFormat("1.14.0")
+		googleJavaFormat("1.17.0")
 	}
 }
 
