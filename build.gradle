@@ -94,9 +94,7 @@ subprojects {
 	if (hasSigningKey) {
 		signing {
 			project.signing {
-				required {
-					!project.hasProperty("skipSigning")
-				}
+				required = !project.hasProperty("skipSigning")
 				def signingKey = project.findProperty("signingKey")
 				def signingPassword = project.findProperty("signingPassword")
 				useInMemoryPgpKeys(signingKey, signingPassword)
