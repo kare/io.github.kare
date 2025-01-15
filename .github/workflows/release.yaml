@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: maven-central
-      url: https://s01.oss.sonatype.org/#view-repositories;staging~browsestorage
+      url: https://s01.oss.sonatype.org/#nexus-search;quick~io.github.kare
     steps:
       - uses: actions/checkout@v4.2.2
       - uses: actions/cache@v4.2.0
