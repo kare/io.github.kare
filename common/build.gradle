@@ -4,6 +4,7 @@ plugins {
 description = "Common Java Utilities"
 
 dependencies {
-	testImplementation("org.junit.jupiter:junit-jupiter-api:${junitJupiterApi}")
+	testImplementation(platform("org.junit:junit-bom:${junitJupiterApi}"))
+	testImplementation("org.junit.jupiter:junit-jupiter-api")
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
