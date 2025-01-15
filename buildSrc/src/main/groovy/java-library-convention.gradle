@@ -90,7 +90,7 @@ tasks.withType(JavaCompile) {
 
 tasks.withType(Javadoc) {
 	options.links += [
-			"https://docs.oracle.com/javase/23/docs/api/",
+			"https://docs.oracle.com/en/java/javase/23/docs/api",
 	]
 	options.addStringOption("Xdoclint:none", "-quiet")
 	options.charSet = "UTF-8"
