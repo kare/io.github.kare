@@ -29,7 +29,7 @@ jobs:
         with:
           java-version: 23
           distribution: oracle
-      - uses: actions/cache@v4.2.0
+      - uses: actions/cache@v4.2.1
         with:
           path: |
             ~/.gradle/caches
