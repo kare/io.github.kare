@@ -31,7 +31,8 @@ jobs:
           java-version: 23
           distribution: oracle
           cache: gradle
-      - run: |
+      - name: Build
+        run: |
           ./gradlew build
       - name: Upload reports
         if: ${{ failure() }}
@@ -39,3 +40,5 @@ jobs:
         with:
           name: build-reports
           path: build/reports/
+      - name: Javadoc
+        run: ./gradlew javadoc-all
