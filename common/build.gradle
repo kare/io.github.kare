@@ -6,5 +6,7 @@ description = "Common Java Utilities"
 dependencies {
 	testImplementation(platform("org.junit:junit-bom:${junitJupiterApi}"))
 	testImplementation("org.junit.jupiter:junit-jupiter-api")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+	testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
 }
