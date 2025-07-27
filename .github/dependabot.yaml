@@ -1,7 +1,7 @@
 ---
 
 #
-# https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates
+# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
 #
 # https://dependabot.com/docs/config-file/validator/
 #
@@ -17,10 +17,6 @@ updates:
       timezone: Europe/Helsinki
     commit-message:
       prefix: ci
-    reviewers:
-      - kare
-    assignees:
-      - kare
     labels:
       - ci
 
@@ -32,9 +28,5 @@ updates:
       timezone: Europe/Helsinki
     commit-message:
       prefix: build
-    reviewers:
-      - kare
-    assignees:
-      - kare
     labels:
       - build
