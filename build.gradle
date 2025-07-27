@@ -143,9 +143,6 @@ tasks.register("javadoc-all", Javadoc) {
 	def heading = "io.github.kare ${project.version} API"
 	title = heading
 	options.windowTitle = heading
-	options.links = [
-			"https://docs.oracle.com/javase/8/docs/api/",
-	]
 	options.addStringOption("Xdoclint:none", "-quiet")
 	options.charSet = "UTF-8"
 	options.encoding = "UTF-8"
