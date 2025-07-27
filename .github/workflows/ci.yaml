@@ -29,13 +29,6 @@ jobs:
         with:
           java-version: 23
           distribution: oracle
-      - uses: actions/cache@v4.2.3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          cache: gradle
       - run: |
           ./gradlew build
