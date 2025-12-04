@@ -19,4 +19,4 @@ jobs:
           java-version: 23
           distribution: oracle
       - name: Generate and submit dependency graph
-        uses: gradle/actions/dependency-submission@v4.4.2
+        uses: gradle/actions/dependency-submission@v5.0.0
