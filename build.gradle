@@ -36,7 +36,7 @@ allprojects {
 
 subprojects {
 	ext {
-		junitJupiterApi = "6.0.1"
+		junitJupiterApi = "6.0.2"
 	}
 	apply plugin: "java-library"
 	apply plugin: "signing"
