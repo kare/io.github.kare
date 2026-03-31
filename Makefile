@@ -23,6 +23,14 @@ publish-local: ## Publish to local Maven repository
 publish-and-release: ## Automatically publish a release of all subprojects to Sonatype https://repo1.maven.org/maven2/io/github/kare/
 	$(gradlew) publishToSonatype closeAndReleaseSonatypeStagingRepository
 
+.PHONY: check
+check: ## Run Spotless check
+	$(gradlew) spotlessCheck
+
+.PHONY: build
+build: ## Run Gradle build
+	$(gradlew) build
+
 .PHONY: test
 test: ## Run all tests
 	$(gradlew) test
